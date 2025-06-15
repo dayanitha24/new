@@ -856,7 +856,7 @@
         });
 
         // Handle product clicks
-        // Handle product clicks
+// Handle product clicks
 allProductsGrids.forEach(grid => {
     grid.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', function() {
@@ -867,8 +867,13 @@ allProductsGrids.forEach(grid => {
             allProductsGrids.forEach(g => g.style.display = 'none');
             productDetail.style.display = 'block';
             
+            // Hide the page header elements
+            headerTitle.style.display = 'none';
+            headerDescription.style.display = 'none';
+            
             // Update product detail title
             detailTitle.textContent = productTitles[productId];
+            detailTitle.classList.add('with-line');
             
             // Show back buttons
             backToCategories.style.display = 'none';
@@ -882,6 +887,10 @@ backToCategories.addEventListener('click', function() {
     categoriesGrid.style.display = 'grid';
     allProductsGrids.forEach(grid => grid.style.display = 'none');
     productDetail.style.display = 'none';
+    
+    // Show the page header elements again
+    headerTitle.style.display = 'block';
+    headerDescription.style.display = 'block';
     
     // Reset header
     headerTitle.textContent = 'Our Signature Collection';
@@ -897,6 +906,14 @@ backToProducts.addEventListener('click', function() {
     allProductsGrids.forEach(grid => grid.style.display = 'none');
     document.getElementById(currentCategory + 'Products').style.display = 'grid';
     productDetail.style.display = 'none';
+    
+    // Show the page header elements again
+    headerTitle.style.display = 'block';
+    headerDescription.style.display = 'block';
+    
+    // Update header with category info
+    headerTitle.textContent = categoryData[currentCategory].title;
+    headerDescription.textContent = categoryData[currentCategory].description;
     
     // Show appropriate back button
     backToCategories.style.display = 'block';
