@@ -1,515 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signature Textile Collection</title>
-    <style>
-        :root {
-            --primary: #425260;
-            --secondary: #3b444c;
-            --light-bg: #e6e6e4;
-            --medium-light: #c9c8c5;
-            --medium: #b8b8b6;
-            --lightest: #ebebe9;
-            --accent1: #dadd6cb;
-            --accent2: #dd6d6db;
-            --dark: #3a4346;
-            --primmary: #44535e;
-            --white: #ffffff;
-            --section-bg: rgba(249, 245, 242, 0.7);
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--section-bg);
-            margin: 0;
-            padding: 0;
-            color: var(--secondary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signature Textile Collection</title>
+  <style>
+    :root {
+      --primary: #425260;
+      --secondary: #3b444c;
+      --white: #ffffff;
+      --primmary: #44535e;
+      --section-bg: rgba(249, 245, 242, 0.7);
+    }
 
-        nav {
-            background-color: var(--primmary);
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-            padding: 1rem 2rem;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: var(--section-bg);
+      color: var(--secondary);
+    }
 
-        nav a {
-            color: var(--white);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            transition: background 0.3s ease;
-        }
+    nav {
+      background-color: var(--primmary);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem 2rem;
+    }
 
-        nav a:hover, nav a.active {
-            background-color: rgba(255, 255, 255, 0.15);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-            flex: 1;
-        }
-        
-        .page-header {
-            text-align: center;
-            margin: 40px 0 30px;
-            color: var(--primary);
-            position: relative;
-            padding: 0 15px;
-        }
-        
-        .header-title {
-            font-size: clamp(22px, 4vw, 28px);
-            font-weight: 600;
-            margin: 0;
-            display: inline-block;
-            position: relative;
-            padding: 0 40px;
-        }
-        
-        /* Cross lines positioned closer to heading */
-        .header-title:before,
-        .header-title:after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: 60px;
-            height: 2px;
-            background-color: var(--primary);
-            transition: all 0.3s ease;
-        }
-        
-        .header-title:before {
-            left: -50px;
-            transform: translateY(-50%);
-        }
-        
-        .header-title:after {
-            right: -50px;
-            transform: translateY(-50%);
-        }
-        
-        /* Hover animation for cross lines */
-        .page-header:hover .header-title:before {
-            left: -55px;
-            width: 65px;
-        }
-        
-        .page-header:hover .header-title:after {
-            right: -55px;
-            width: 65px;
-        }
-        
-        .back-to-categories, 
-        .back-to-products {
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--primary);
-            cursor: pointer;
-            font-size: 14px;
-            display: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
-        }
-        
-        .back-to-categories:hover,
-        .back-to-products:hover {
-            background-color: rgba(66, 82, 96, 0.1);
-        }
-        
-        .back-to-categories:before,
-        .back-to-products:before {
-            content: "←";
-            margin-right: 5px;
-        }
-        
-        /* Improved grid with professional spacing */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-        
-        .category-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-            overflow: hidden;
-            height: 100%;
-            margin: 0 auto;
-            max-width: 350px;
-            width: 100%;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        /* Refined category images */
-        .category-image {
-            height: 180px;
-            background-color: var(--medium-light);
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            width: 100%;
-        }
-        
-        .category-image::after {
-            content: attr(data-category-name);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: clamp(18px, 3vw, 22px);
-            font-weight: bold;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-            text-transform: uppercase;
-            opacity: 0;
-            transition: all 0.3s ease;
-            letter-spacing: 1px;
-        }
-        
-        .category-card:hover .category-image::after {
-            opacity: 1;
-            font-size: clamp(20px, 3.2vw, 24px);
-        }
-        
-        .products-grid {
-            display: none;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-        
-        /* Enhanced product cards */
-        .product-card {
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            height: 100%;
-            margin: 0 auto;
-            max-width: 300px;
-            width: 100%;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-        }
-        
-        /* Professional product images */
-        .product-image {
-            height: 200px;
-            background-color: var(--medium);
-            background-size: cover;
-            background-position: center;
-            transition: transform 0.3s ease;
-            width: 100%;
-        }
-        
-        .product-card:hover .product-image {
-            transform: scale(1.02);
-        }
-        
-        .product-name {
-            padding: 16px 0;
-            text-align: center;
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
-        
-        .product-detail {
-            display: none;
-            margin-top: 40px;
-            padding: 0 15px;
-        }
-        
-        /* Refined detail images grid */
-        .detail-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 40px 0;
-        }
-        
-        .detail-image {
-            height: 260px;
-            background-color: var(--medium-light);
-            background-size: cover;
-            background-position: center;
-            border-radius: 6px;
-            transition: transform 0.3s ease;
-            width: 100%;
-        }
-        
-        .detail-image:hover {
-            transform: scale(1.03);
-        }
-        
-        .detail-description {
-            text-align: center;
-            color: var(--dark);
-            line-height: 1.7;
-            max-width: 700px;
-            margin: 30px auto;
-            font-size: 15px;
-            padding: 0 20px;
-        }
-        
-        /* Subtle grid pattern */
-        .grid-pattern {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(#d1d1d1 1px, transparent 1px),
-                linear-gradient(90deg, #d1d1d1 1px, transparent 1px);
-            background-size: 25px 25px;
-            opacity: 0.2;
-            z-index: -1;
-            top: 0;
-            left: 0;
-        }
+    nav a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background 0.3s ease;
+    }
+    nav a:hover,
+    nav a.active {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
 
-        /* Responsive adjustments */
-        @media (max-width: 900px) {
-            .categories-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-            
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            }
-        }
+    .grid-pattern {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image:
+        linear-gradient(#d1d1d1 1px, transparent 1px),
+        linear-gradient(90deg, #d1d1d1 1px, transparent 1px);
+      background-size: 25px 25px;
+      opacity: 0.2;
+      z-index: -1;
+    }
 
-        @media (max-width: 768px) {
-            .header-title:before,
-            .header-title:after {
-                width: 30px;
-            }
-            
-            .header-title:before {
-                left: -30px;
-            }
-            
-            .header-title:after {
-                right: -30px;
-            }
-            
-            .page-header:hover .header-title:before {
-                left: -35px;
-                width: 35px;
-            }
-            
-            .page-header:hover .header-title:after {
-                right: -35px;
-                width: 35px;
-            }
-            
-            .back-to-categories, 
-            .back-to-products {
-                position: relative;
-                display: block;
-                margin: 10px auto;
-                top: auto;
-                left: auto;
-                transform: none;
-                text-align: center;
-                width: fit-content;
-            }
-            
-            .categories-grid,
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 20px;
-            }
-            
-            .category-image {
-                height: 150px;
-            }
-            
-            .product-image {
-                height: 160px;
-            }
-            
-            .detail-image {
-                height: 200px;
-            }
-            
-            .page-header {
-                margin: 30px 0 20px;
-            }
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-        @media (max-width: 600px) {
-            .categories-grid,
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 15px;
-            }
-            
-            .category-image {
-                height: 130px;
-            }
-            
-            .product-image {
-                height: 140px;
-            }
-            
-            .product-name {
-                padding: 12px 0;
-                font-size: 14px;
-            }
-            
-            .detail-images {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-        }
+    .page-header {
+      text-align: center;
+      margin: 40px 0 30px;
+      position: relative;
+      color: var(--primary);
+    }
+    .header-title {
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 600;
+      display: inline-block;
+      position: relative;
+      padding: 0 40px;
+    }
+    .header-title:before,
+    .header-title:after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 60px; height: 2px;
+      background-color: var(--primary);
+      transform: translateY(-50%);
+      transition: all 0.3s ease;
+    }
+    .header-title:before { left: -50px; }
+    .header-title:after  { right: -50px; }
+    .page-header:hover .header-title:before {
+      left: -55px; width: 65px;
+    }
+    .page-header:hover .header-title:after {
+      right: -55px; width: 65px;
+    }
 
-        @media (max-width: 480px) {
-            nav {
-                flex-direction: column;
-                align-items: center;
-                gap: 0.5rem;
-                padding: 0.75rem 1rem;
-            }
-            
-            nav a {
-                font-size: 0.9rem;
-                padding: 0.4rem 0.8rem;
-            }
-            
-            .header-title {
-                padding: 0 20px;
-                font-size: clamp(20px, 5vw, 24px);
-            }
-            
-            .header-title:before,
-            .header-title:after {
-                display: none;
-            }
-            
-            .categories-grid,
-            .products-grid {
-                grid-template-columns: 1fr;
-                max-width: 350px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            
-            .category-card,
-            .product-card {
-                max-width: 100%;
-            }
-            
-            .detail-image {
-                height: 180px;
-            }
-            
-            .detail-description {
-                font-size: 14px;
-                padding: 0 15px;
-            }
-            
-            .container {
-                padding: 15px;
-            }
-        }
+    .back-to-categories,
+    .back-to-products {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0;
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 14px;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      display: none;
+      transition: background-color 0.2s;
+    }
+    .back-to-categories:hover,
+    .back-to-products:hover {
+      background-color: rgba(66, 82, 96, 0.1);
+    }
+    .back-to-categories:before,
+    .back-to-products:before {
+      content: "←";
+      margin-right: 5px;
+    }
 
-        @media (max-width: 360px) {
-            .category-image {
-                height: 120px;
-            }
-            
-            .product-image {
-                height: 130px;
-            }
-            
-            .product-name {
-                font-size: 13px;
-            }
-        }
-    </style>
+    /* center both grids & collapse empty slots */
+    .categories-grid,
+    .products-grid {
+      display: grid;
+      justify-content: center;
+      justify-items: center;
+      gap: 25px;
+      margin: 30px 0;
+      padding: 0 15px;
+      box-sizing: border-box;
+    }
+    .categories-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .products-grid {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    .category-card,
+    .product-card {
+      width: 100%;
+      max-width: 350px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category-card:hover,
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .category-image,
+    .product-image {
+      width: 100%;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+      position: relative;
+    }
+    .product-image { height: 200px; }
+    .product-card:hover .product-image {
+      transform: scale(1.02);
+    }
+
+    .category-image::after {
+      content: attr(data-category-name);
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: clamp(18px, 3vw, 22px);
+      font-weight: bold;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 0.3s ease, font-size 0.3s ease;
+      letter-spacing: 1px;
+    }
+    .category-card:hover .category-image::after {
+      opacity: 1;
+      font-size: clamp(20px, 3.2vw, 24px);
+    }
+
+    .product-name {
+      text-align: center;
+      padding: 16px 0;
+      font-weight: 600;
+      font-size: 15px;
+      letter-spacing: 0.5px;
+      color: var(--secondary);
+    }
+
+    /* product detail */
+    .product-detail {
+      display: none;
+      padding: 0 15px;
+      margin-top: 40px;
+    }
+    .detail-images {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    .detail-image {
+      width: 100%;
+      height: 260px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 6px;
+      transition: transform 0.3s ease;
+    }
+    .detail-image:hover {
+      transform: scale(1.03);
+    }
+    .detail-description {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.7;
+      font-size: 15px;
+      color: var(--secondary);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 900px) {
+      .category-image { height: 150px; }
+      .product-image  { height: 160px; }
+      .detail-image   { height: 200px; }
+    }
+    @media (max-width: 600px) {
+      .category-image { height: 130px; }
+      .product-image  { height: 140px; }
+      .product-name   { font-size: 14px; padding: 12px 0; }
+      .detail-images  { grid-template-columns: 1fr; gap: 15px; }
+    }
+    @media (max-width: 480px) {
+      nav { flex-direction: column; gap: 0.5rem; padding: 0.75rem 1rem; }
+      nav a { font-size: 0.9rem; padding: 0.4rem 0.8rem; }
+      .categories-grid,
+      .products-grid {
+        grid-template-columns: 1fr;
+        max-width: 350px;
+        margin: 0 auto;
+      }
+    }
+
+  </style>
 </head>
 <body>
-    <nav>
-        <a href="home.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="products.html" class="active">Products</a>
-        <a href="certifications.html">Certifications</a>
-        <a href="sustainability.html">Sustainability</a>
-        <a href="index.html">Contact Us</a>
-    </nav>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="products.html" class="active">Products</a>
+    <a href="certifications.html">Certifications</a>
+    <a href="sustainability.html">Sustainability</a>
+    <a href="index.html">Contact Us</a>
+  </nav>
 
-    <div class="grid-pattern"></div>
-    <div class="container">
-        <div class="page-header">
-            <button class="back-to-categories" id="backToCategories">Back to Categories</button>
-            <h1 class="header-title" id="headerTitle">Our Signature Collection</h1>
-            <button class="back-to-products" id="backToProducts">Back to Products</button>
+  <div class="grid-pattern"></div>
+  <div class="container">
+    <div class="page-header">
+      <button class="back-to-categories" id="backToCategories">Back to Categories</button>
+      <h1 class="header-title" id="headerTitle">Our Signature Collection</h1>
+      <button class="back-to-products" id="backToProducts">Back to Products</button>
+    </div>
+
+    <!-- Categories -->
+    <div class="categories-grid" id="categoriesGrid">
+      <div class="category-card" data-category="living">
+        <div class="category-image"
+             data-category-name="LIVING"
+             style="background-image:
+               linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+               url('images/living.jpeg')">
         </div>
-        
-        <!-- Categories Section -->
-        <div class="categories-grid" id="categoriesGrid">
-            <div class="category-card" data-category="living">
-                <div class="category-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/living.jpeg')" data-category-name="LIVING"></div>
-            </div>
-            <div class="category-card" data-category="dining">
-                <div class="category-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/dinning.jpeg')" data-category-name="DINING"></div>
-            </div>
-            <div class="category-card" data-category="kitchen">
-                <div class="category-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/kitchen.jpeg')" data-category-name="KITCHEN"></div>
-            </div>
-            <div class="category-card" data-category="bedding">
-                <div class="category-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/bedding.jpeg')" data-category-name="BEDDING"></div>
-            </div>
-            <div class="category-card" data-category="garden">
-                <div class="category-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/garden.jpeg')" data-category-name="GARDEN"></div>
-            </div>
-            <div class="category-card" data-category="kids">
-                <div class="category-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/kids.jpeg')" data-category-name="KIDS"></div>
-            </div>
+      </div>
+      <div class="category-card" data-category="dining">
+        <div class="category-image"
+             data-category-name="DINING"
+             style="background-image:
+               linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+               url('images/dinning.jpeg')">
         </div>
-        
-        <!-- Living Products -->
-        <div class="products-grid" id="livingProducts">
-            <div class="product-card" data-product="curtain">
-                <div class="product-image" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('images/living.jpeg')"></div>
-                <div class="product-name">Curtain</div>
-            </div>
-            <div class="product-card" data-product="floor-cushion">
+      </div>
+      <div class="category-card" data-category="kitchen">
+        <div class="category-image"
+             data-category-name="KITCHEN"
+             style="background-image:
+               linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+               url('images/kitchen.jpeg')">
+        </div>
+      </div>
+      <div class="category-card" data-category="bedding">
+        <div class="category-image"
+             data-category-name="BEDDING"
+             style="background-image:
+               linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+               url('images/bedding.jpeg')">
+        </div>
+      </div>
+      <div class="category-card" data-category="garden">
+        <div class="category-image"
+             data-category-name="GARDEN"
+             style="background-image:
+               linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+               url('images/garden.jpeg')">
+        </div>
+      </div>
+      <div class="category-card" data-category="kids">
+        <div class="category-image"
+             data-category-name="KIDS"
+             style="background-image:
+               linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
+               url('images/kids.jpeg')">
+        </div>
+      </div>
+    </div>
+
+    <!-- Living Products -->
+    <div class="products-grid" id="livingProducts">
+      <div class="product-card" data-product="curtain">
+        <div class="product-image"
+             style="background-image:
+               linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)),
+               url('images/living.jpeg')">
+        </div>
+        <div class="product-name">Curtain</div>
+      </div>
+      <div class="product-card" data-product="floor-cushion">
                 <div class="product-image" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('images/living.jpeg')"></div>
                 <div class="product-name">Floor Cushion</div>
             </div>
@@ -526,8 +350,11 @@
                 <div class="product-name">Cushion Cover</div>
             </div>
         </div>
-        
-        <!-- Dining Products -->
+     
+  
+      
+    <!-- repeat for diningProducts, kitchenProducts, etc. -->
+    <!-- Dining Products -->
         <div class="products-grid" id="diningProducts">
             <div class="product-card" data-product="table-cloth">
                 <div class="product-image" style="background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), url('images/dinning.jpeg')"></div>
@@ -642,89 +469,72 @@
                 <div class="product-name">Wash Cloth</div>
             </div>
         </div>
-        
-        <!-- Product Detail Section -->
-        <div class="product-detail" id="productDetail">
-            <div class="detail-images">
-                <div class="detail-image" style="background-image: url('images/living.jpeg')"></div>
-                <div class="detail-image" style="background-image: url('images/dinning.jpeg')"></div>
-                <div class="detail-image" style="background-image: url('images/kitchen.jpeg')"></div>
-            </div>
-            <p class="detail-description">
-                Premium quality textile with elegant design. Made from 100% organic cotton with eco-friendly dyes. 
-                Perfect for adding a touch of sophistication to your home.
-            </p>
-        </div>
+    <!-- Product Detail -->
+    <div class="product-detail" id="productDetail">
+      <div class="detail-images">
+        <div class="detail-image" style="background-image: url('images/living.jpeg')"></div>
+        <div class="detail-image" style="background-image: url('images/dinning.jpeg')"></div>
+        <div class="detail-image" style="background-image: url('images/kitchen.jpeg')"></div>
+      </div>
     </div>
+  </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const headerTitle = document.getElementById('headerTitle');
-            const backToCategories = document.getElementById('backToCategories');
-            const backToProducts = document.getElementById('backToProducts');
-            const categoriesGrid = document.getElementById('categoriesGrid');
-            const allProductsGrids = document.querySelectorAll('.products-grid');
-            const productDetail = document.getElementById('productDetail');
-            
-            let currentCategory = '';
-            
-            // Category click handler
-            document.querySelectorAll('.category-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    currentCategory = this.getAttribute('data-category');
-                    const categoryName = this.querySelector('.category-image').getAttribute('data-category-name');
-                    
-                    // Update UI
-                    headerTitle.textContent = categoryName + " COLLECTION";
-                    backToCategories.style.display = 'block';
-                    backToProducts.style.display = 'none';
-                    
-                    // Show products
-                    categoriesGrid.style.display = 'none';
-                    document.getElementById(currentCategory + 'Products').style.display = 'grid';
-                    productDetail.style.display = 'none';
-                });
-            });
-            
-            // Product click handler
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const productName = this.querySelector('.product-name').textContent;
-                    
-                    // Update UI
-                    headerTitle.textContent = productName;
-                    backToCategories.style.display = 'none';
-                    backToProducts.style.display = 'block';
-                    
-                    // Show product detail
-                    allProductsGrids.forEach(grid => grid.style.display = 'none');
-                    productDetail.style.display = 'block';
-                });
-            });
-            
-            // Back to categories handler
-            backToCategories.addEventListener('click', function() {
-                headerTitle.textContent = 'Our Signature Collection';
-                backToCategories.style.display = 'none';
-                
-                // Show categories
-                categoriesGrid.style.display = 'grid';
-                allProductsGrids.forEach(grid => grid.style.display = 'none');
-                productDetail.style.display = 'none';
-            });
-            
-            // Back to products handler
-            backToProducts.addEventListener('click', function() {
-                const categoryName = document.querySelector(`.category-card[data-category="${currentCategory}"] .category-image`).getAttribute('data-category-name');
-                headerTitle.textContent = categoryName + " COLLECTION";
-                backToCategories.style.display = 'block';
-                backToProducts.style.display = 'none';
-                
-                // Show products
-                document.getElementById(currentCategory + 'Products').style.display = 'grid';
-                productDetail.style.display = 'none';
-            });
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const headerTitle = document.getElementById('headerTitle');
+      const backToCategories = document.getElementById('backToCategories');
+      const backToProducts   = document.getElementById('backToProducts');
+      const categoriesGrid   = document.getElementById('categoriesGrid');
+      const allProducts      = document.querySelectorAll('.products-grid');
+      const productDetail    = document.getElementById('productDetail');
+      let currentCategory    = '';
+
+      // Category → show corresponding products
+      document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', () => {
+          currentCategory = card.dataset.category;
+          const name = card.querySelector('.category-image').dataset.categoryName;
+          headerTitle.textContent = name + ' COLLECTION';
+          backToCategories.style.display = 'block';
+          backToProducts.style.display   = 'none';
+          categoriesGrid.style.display   = 'none';
+          document.getElementById(currentCategory + 'Products').style.display = 'grid';
+          productDetail.style.display = 'none';
         });
-    </script>
+      });
+
+      // Product → show detail
+      document.querySelectorAll('.product-card').forEach(card => {
+        card.addEventListener('click', () => {
+          headerTitle.textContent = card.querySelector('.product-name').textContent;
+          backToCategories.style.display = 'none';
+          backToProducts.style.display   = 'block';
+          allProducts.forEach(g => g.style.display = 'none');
+          productDetail.style.display = 'block';
+        });
+      });
+
+      // Back to categories
+      backToCategories.addEventListener('click', () => {
+        headerTitle.textContent = 'Our Signature Collection';
+        backToCategories.style.display = 'none';
+        categoriesGrid.style.display   = 'grid';
+        allProducts.forEach(g => g.style.display = 'none');
+        productDetail.style.display = 'none';
+      });
+
+      // Back to products
+      backToProducts.addEventListener('click', () => {
+        const name = document.querySelector(
+          `.category-card[data-category="${currentCategory}"] .category-image`
+        ).dataset.categoryName;
+        headerTitle.textContent = name + ' COLLECTION';
+        backToCategories.style.display = 'block';
+        backToProducts.style.display   = 'none';
+        document.getElementById(currentCategory + 'Products').style.display = 'grid';
+        productDetail.style.display = 'none';
+      });
+    });
+  </script>
 </body>
 </html>
