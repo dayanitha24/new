@@ -335,7 +335,8 @@
             font-family: 'Playfair Display', serif;
             font-size: 2rem;
             color: var(--dark);
-            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-bottom: 40px;
             text-align: center;
             position: relative;
             padding-bottom: 15px;
@@ -344,7 +345,7 @@
         .detail-title.with-line:after {
             content: "";
             position: absolute;
-            bottom: 0;
+            bottom: -10px;
             left: 50%;
             transform: translateX(-50%);
             width: 80px;
@@ -883,18 +884,23 @@ allProductsGrids.forEach(grid => {
 });
 
 // Handle back to categories click
+// Handle back to categories click
 backToCategories.addEventListener('click', function() {
     categoriesGrid.style.display = 'grid';
     allProductsGrids.forEach(grid => grid.style.display = 'none');
     productDetail.style.display = 'none';
     
     // Show the page header elements again
-    headerTitle.style.display = 'block';
+    headerTitle.style.display = 'inline-block'; // Changed from 'block' to 'inline-block'
     headerDescription.style.display = 'block';
     
     // Reset header
     headerTitle.textContent = 'Our Signature Collection';
     headerDescription.textContent = 'Discover our exquisite range of handcrafted textiles, where timeless tradition meets contemporary design. Each piece is carefully crafted using sustainable materials and artisanal techniques.';
+    
+    // Reset the title styling
+    headerTitle.classList.remove('with-line');
+    headerTitle.style.padding = '0 40px'; // Ensure padding is reset
     
     // Hide back button
     backToCategories.style.display = 'none';
@@ -908,18 +914,21 @@ backToProducts.addEventListener('click', function() {
     productDetail.style.display = 'none';
     
     // Show the page header elements again
-    headerTitle.style.display = 'block';
+    headerTitle.style.display = 'inline-block'; // Changed from 'block' to 'inline-block'
     headerDescription.style.display = 'block';
     
     // Update header with category info
     headerTitle.textContent = categoryData[currentCategory].title;
     headerDescription.textContent = categoryData[currentCategory].description;
     
+    // Reset the title styling
+    headerTitle.classList.remove('with-line');
+    headerTitle.style.padding = '0 40px'; // Ensure padding is reset
+    
     // Show appropriate back button
     backToCategories.style.display = 'block';
     backToProducts.style.display = 'none';
 });
-
 // Responsive adjustments for back buttons
 function handleResponsiveBackButtons() {
     if (window.innerWidth <= 768) {
